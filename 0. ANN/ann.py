@@ -40,19 +40,22 @@ X_test = sc.transform(X_test)
 # Import Keras libs
 import keras
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Dropout
 
 # Init the ANN
 classifier=Sequential()
 
-# Add the input layer and first hidden layer
+# Add the input layer and first hidden layer with dropout
 classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu', input_dim=11))
+classifier.add(Dropout(p=0.1))
 
 # Add the second hidden layer
 classifier.add(Dense(units=6, kernel_initializer='uniform', activation='relu'))
+classifier.add(Dropout(p=0.1))
 
 # Add the output layer
 classifier.add(Dense(units=1, kernel_initializer='uniform', activation='sigmoid'))
+classifier.add(Dropout(p=0.1))
 
 # Compile the ANN
 classifier.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
@@ -93,7 +96,7 @@ accuracies=cross_val_score(classifier, X=X_train, y=y_train, cv=10)
 mean=accuracies.mean()
 variance=accuracies.std()
 
-
+# Tuning the ANN
 
 
 
