@@ -61,9 +61,22 @@ plt.plot(real_stock_price, color='red', label='real stock price')
 plt.plot(predicted_stock_price, color='blue', label='predicted stock price')
 plt.show()
 
+# Get the real stock price from 2012 to 2016
+real_stock_price_train=pd.read_csv('Google_Stock_Price_Train.csv')
+real_stock_price_train=real_stock_price_train.iloc[:, 1:2].values
 
+# Get the predicted stock price
+predicted_stock_price_train=regressor.predict(X_train)
+predicted_stock_price_train=sc.inverse_transform(predicted_stock_price_train)
 
+# Visualize rez
+plt.plot(real_stock_price_train, color='red', label='real stock price')
+plt.plot(predicted_stock_price_train, color='blue', label='predicted stock price')
+plt.show()
 
+# Part 4 - Eval the RNN
 
+import math
+from sklearn.metrics import mean_squared_error
 
-
+rmse=math.sqrt(mean_squared_error(real_stock_price, predicted_stock_price))
