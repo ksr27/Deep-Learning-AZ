@@ -50,6 +50,23 @@ test_set=convert(test_set)
 training_set=torch.FloatTensor(training_set)
 test_set=torch.FloatTensor(test_set)
 
+# Convert the ratings into binary ratings
+training_set[training_set==0]=-1
+training_set[training_set==1]=0
+training_set[training_set==2]=0
+training_set[training_set>=3]=1
+
+test_set[test_set==0]=-1
+test_set[test_set==1]=0
+test_set[test_set==2]=0
+test_set[test_set>=3]=1
+
+# Create the architecture of the Neural Network
+class RBM(object):
+    def __init__(self, nv, nh):
+        self.W=torch.randn(nh, nv)
+        self.a=torch.randn(1, nh)
+        self.b=torch.randn(1, nv)
 
 
 
