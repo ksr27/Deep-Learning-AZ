@@ -68,6 +68,46 @@ class RBM(object):
         self.a=torch.randn(1, nh)
         self.b=torch.randn(1, nv)
 
+    def sample_h(self, x):
+        wx=torch.mm(x, self.W.t())
+        activation=wx+self.a.expand_as(wx)
+        p_h_given_v=torch.sigmoid(activation)
+        return p_h_given_v, torch.bernoulli(p_h_given_v)
 
+    def sample_v(self, y):
+        wy=torch.mm(y, self.W)
+        activation=wy+self.b.expand_as(wy)
+        p_v_given_h=torch.sigmoid(activation)
+        return p_v_given_h, torch.bernoulli(p_v_given_h)
+    
+    def train(self, v0, vk, ph0, phk):
+        self.W+=torch.mm(v0.t(), ph0)-torch.mm(vk.t(), phk)
+        self.b+=torch.sum((v0-vk), 0)
+        self.a+=torch.sum((ph0-phk), 0)
+        
+# Create the RBM object
+nv=len(training_set[0])
+nh=100
+batch_size=100
 
+rbm=RBM(nv, nh)        
+        
+# Train the RBM model
+nb_epoch=10
 
+for epoch in range(1, nb_epoch+1):
+    train_loss=0
+    s=0.0
+    for id_user in range(0, nb_users-batch_size, batch_size):
+        vk=training_set[id_user:id_user+batch_size]
+        v0=training_set[id_user:id_user+batch_size]
+        ph0, _=rbm.sample_h(v0)
+        for k in range(10):
+            
+    
+    
+    
+    
+    
+    
+    
