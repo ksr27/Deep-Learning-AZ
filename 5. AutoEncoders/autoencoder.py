@@ -59,7 +59,18 @@ class SAE(nn.Module):
         self.fc3=nn.Linear(10, 20)
         self.fc4=nn.Linear(20, nb_movies)
         self.activation=nn.Sigmoid()
-
+        
+    def forward(self, x):
+        x=self.activation(self.fc1(x))
+        x=self.activation(self.fc2(x))
+        x=self.activation(self.fc3(x))
+        x=self.fc4(x)
+        return x
+    
+# Create an instance of autoencoder
+sae=SAE()
+criterion=nn.MSELoss()
+optimizer=optim.RMSprop(sae.parameters(), lr=0.01, weight_decay=0.5)
 
 
 
