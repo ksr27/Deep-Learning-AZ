@@ -50,17 +50,17 @@ test_set=convert(test_set)
 training_set=torch.FloatTensor(training_set)
 test_set=torch.FloatTensor(test_set)
 
-# Convert the ratings into binary ratings
-training_set[training_set==0]=-1
-training_set[training_set==1]=0
-training_set[training_set==2]=0
-training_set[training_set==3]=1
-training_set[training_set==4]=1
-training_set[training_set==5]=1
+# Create the architecture of the Neural Net
+class SAE(nn.Module):
+    def __init__(self, ):
+        super(SAE, self).__init__()
+        self.fc1=nn.Linear(nb_movies, 20)
+        self.fc2=nn.Linear(20, 10)
+        self.fc3=nn.Linear(10, 20)
+        self.fc4=nn.Linear(20, nb_movies)
+        self.activation=nn.Sigmoid()
 
-test_set[test_set==0]=-1
-test_set[test_set==1]=0
-test_set[test_set==2]=0
-test_set[test_set==3]=1
-test_set[test_set==4]=1
-test_set[test_set==5]=1
+
+
+
+
